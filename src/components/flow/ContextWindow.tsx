@@ -141,24 +141,18 @@ const ContextWindow = () => {
           <PlusIcon className="transform rotate-45" />
         </button>
         <Accordion
+          key={selectedNode.id}
           className="w-full h-max overflow-y-auto overflow-x-hidden"
           type="single"
           collapsible
-          defaultValue="item-current"
+          defaultValue={`item-${selectedNode.data.context.length - 1}`}
         >
-          {selectedNode.data.context.slice(0, -1).map((contextItem, index) => (
+          {selectedNode.data.context.map((contextItem, index) => (
             <AccordionItem key={contextItem.fact} value={`item-${index}`}>
               <AccordionTrigger>{contextItem.label}</AccordionTrigger>
               <AccordionContent>{contextItem.fact}</AccordionContent>
             </AccordionItem>
           ))}
-
-          {selectedNode && (
-            <AccordionItem value="item-current">
-              <AccordionTrigger>{selectedNode.data.label}</AccordionTrigger>
-              <AccordionContent>{selectedNode.data.fact}</AccordionContent>
-            </AccordionItem>
-          )}
         </Accordion>
 
         {isPending ? (

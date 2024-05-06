@@ -44,7 +44,6 @@ const Page = async ({ params }: PageProps) => {
       },
       data: {
         label: fact.summary,
-        fact: fact.fact,
         context: [{ label: fact.summary, fact: fact.fact }],
       },
       type: "custom",

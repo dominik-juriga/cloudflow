@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import React, { memo } from "react";
 import { Handle, Position, type NodeProps } from "reactflow";
 
-const CustomNode = ({ data, isConnectable, xPos }: NodeProps) => {
-  const isRoot = data.fact == null;
+const CustomNode = ({ id, data, isConnectable, xPos }: NodeProps) => {
+  const isRoot = id === "0";
   const isLeft = xPos < 0;
   return (
     <div className="bg-white px-4 py-2 border border-gray-200 rounded-lg">
