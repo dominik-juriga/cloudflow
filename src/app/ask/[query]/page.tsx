@@ -57,7 +57,7 @@ const Page = async ({ params }: PageProps) => {
       id: `e/0/${node.id}`,
       source: `0`,
       target: node.id,
-      type: "straight",
+      type: "custom",
     }));
 
   return <Flow nodes={nodes} edges={edges} topic={decoded} />;

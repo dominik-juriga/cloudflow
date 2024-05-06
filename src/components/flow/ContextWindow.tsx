@@ -3,10 +3,10 @@
 import { useNodeStore } from "@/providers/NodeStoreProvider";
 
 import { useMutation } from "@tanstack/react-query";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, TrashIcon } from "lucide-react";
 import qs from "qs";
 import React from "react";
-import { useReactFlow, getOutgoers } from "reactflow";
+import { useReactFlow, getOutgoers, type Node } from "reactflow";
 import Spinner from "../Spinner";
 import {
   Accordion,
@@ -14,15 +14,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { Switch } from "../ui/switch";
+import { cn } from "@/lib/utils";
+import { NodeContent } from "@/stores/NodeStore";
 
 const ContextWindow = () => {
   const [query, setQuery] = React.useState("");
 
   const flow = useReactFlow();
 
-  const { topic, setSelectedNodeId, getSelectedNode } = useNodeStore(
-    (state) => state
-  );
+  const [deleteMode, setDeleteMode] = React.useState(false);
+
+  const { topic, setSelectedNodeId, getSelectedNode, removeNodeWithAllEdges } =
+    useNodeStore((state) => state);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (query: string) => {
@@ -95,7 +99,7 @@ const ContextWindow = () => {
         id: `e/${currentNode?.id}/${node.id}`,
         source: currentNode?.id ?? "",
         target: node.id,
-        type: "smoothstep",
+        type: "custom",
       };
 
       flow.addNodes([node]);
@@ -107,13 +111,29 @@ const ContextWindow = () => {
 
   const selectedNode = getSelectedNode();
 
+  const removeNode = React.useCallback(
+    (node: Node<NodeContent> | null) => {
+      if (!node) {
+        return;
+      }
+
+      removeNodeWithAllEdges(node.id);
+    },
+    [removeNodeWithAllEdges]
+  );
+
+  React.useEffect(() => {
+    setDeleteMode(false);
+  }, [selectedNode]);
+
   if (!selectedNode) {
     return null;
   }
 
   return (
-    <div className="absolute right-0 top-0 w-1/2 h-screen bg-red-50 px-6 py-8">
-      <div className="flex flex-col justify-between h-full relative pt-8">
+    <div className="absolute right-0 top-0 w-1/2 h-screen z-10  px-6 py-8">
+      <div className="size-full absolute left-0 top-0 isolate  rounded-xl bg-white/70 backdrop-blur-md shadow-2xl ring-1 ring-black/5" />
+      <div className="flex z-10 flex-col justify-between h-full relative pt-8">
         <button
           className="absolute top-0 right-[-2px]"
           onClick={() => setSelectedNodeId(null)}
@@ -152,17 +172,37 @@ const ContextWindow = () => {
               autoComplete="off"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-center text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border w-full border-gray-200 text-gray-900 text-center text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Expand the conversation..."
               required
             />
-            <button
-              onClick={() => mutate(query)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="submit"
-            >
-              Explore more on {selectedNode.data.label}
-            </button>
+
+            <div className="w-full flex justify-between gap-2">
+              <button
+                onClick={() => mutate(query)}
+                className="bg-gray-50 hover:bg-gray-100 transition-colors duration-300 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="submit"
+              >
+                Explore more on {selectedNode.data.label}
+              </button>
+              <div className="flex gap-2 items-center border border-gray-200 rounded-lg p-2">
+                <Switch
+                  checked={deleteMode}
+                  title="Enable node deletion"
+                  onCheckedChange={setDeleteMode}
+                />
+                <button
+                  className={cn({
+                    "opacity-20 transition-opacity duration-300": !deleteMode,
+                  })}
+                  disabled={!deleteMode}
+                  onClick={() => removeNode(selectedNode)}
+                  title="Remove node"
+                >
+                  <TrashIcon color="red" />
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
