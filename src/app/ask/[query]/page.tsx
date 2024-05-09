@@ -3,6 +3,7 @@ import qs from "qs";
 import Flow from "@/components/flow/Flow";
 import { NodeContent } from "@/stores/NodeStore";
 import { type Node } from "reactflow";
+import { notFound } from "next/navigation";
 
 type PageProps = { params: { query: string } };
 
@@ -24,7 +25,12 @@ const Page = async ({ params }: PageProps) => {
   }
 
   const data = await response.json();
-  const parsed = JSON.parse(data[0].message.content);
+  let parsed = null;
+  try {
+    parsed = JSON.parse(data[0].message.content).facts;
+  } catch (e) {
+    notFound();
+  }
 
   const radius = 300;
   const angle = (2 * Math.PI) / parsed.length;
