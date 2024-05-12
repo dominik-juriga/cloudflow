@@ -63,6 +63,7 @@ const Page = async ({ params }: PageProps) => {
       source: `0`,
       target: node.id,
       type: "custom",
+      animated: true,
     }));
 
   return <Flow nodes={nodes} edges={edges} topic={decoded} />;
