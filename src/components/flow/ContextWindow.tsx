@@ -100,6 +100,7 @@ const ContextWindow = () => {
         source: currentNode?.id ?? "",
         target: node.id,
         type: "custom",
+        animated: true,
       };
 
       flow.addNodes([node]);

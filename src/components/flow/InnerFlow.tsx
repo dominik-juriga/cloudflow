@@ -77,6 +77,7 @@ const InnerFlow = (props: FlowType) => {
             source: connection.source,
             target: connection.target,
             type: "custom",
+            animated: true,
             data: {
               connected: true,
             },
