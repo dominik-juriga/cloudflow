@@ -1,10 +1,6 @@
-import { BezierEdge, EdgeProps } from "reactflow";
+import { EdgeProps, StraightEdge } from "reactflow";
 
 const SkeletonEdge = (props: EdgeProps) => (
-  <BezierEdge
-    {...props}
-    animated
-    style={{ strokeDasharray: "5,5", opacity: 0.7 }}
-  />
+  <StraightEdge {...props} style={{ strokeDasharray: "5,5" }} />
 );
 export default SkeletonEdge;

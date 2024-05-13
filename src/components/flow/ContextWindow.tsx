@@ -37,15 +37,15 @@ const ContextWindow = () => {
       if (!currentNode) {
         return;
       }
-      const apiContextValue = currentNode.data.context
-        .map((contextItem) => contextItem.fact)
-        .join("\n");
+      const apiContextValue = currentNode.data.context.map(
+        (contextItem) => contextItem.fact
+      );
 
       const response = await fetch(
         "http://localhost:3000/api/query?" +
           qs.stringify({
             topic,
-            context: apiContextValue,
+            context: JSON.stringify(apiContextValue),
             q: query,
           })
       );
