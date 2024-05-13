@@ -10,7 +10,7 @@ const Flow = (props: FlowType) => {
     <ClientProviders>
       <div className="w-screen h-screen relative">
         <div className="absolute left-0 top-0 z-50 p-2">
-          <Link href="/ask" title="Back to main screen">
+          <Link href="/" title="Back to main screen">
             <ArrowLeft className="w-8 h-8 text-gray-900 opacity-40 hover:opacity-100 transition-all duration-300" />
           </Link>
         </div>
