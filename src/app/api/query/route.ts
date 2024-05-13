@@ -1,5 +1,6 @@
 import { openai } from "@/ai";
 
+// Demo - explain
 async function getQueryResponse(request: Request) {
   const { searchParams } = new URL(request.url);
 
@@ -28,4 +29,5 @@ function formatQueryContext(
   return ` Keep the answer as concise as possible. Topic: ${topic}. Context: ${context}. Answer: ${q}.`;
 }
 
+// Demo - explain
 export { getQueryResponse as GET };

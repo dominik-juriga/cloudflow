@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  // Demo - live coding
   async function createInvoice(formData: FormData) {
     "use server";
 

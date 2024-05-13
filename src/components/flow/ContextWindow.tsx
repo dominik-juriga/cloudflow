@@ -24,11 +24,13 @@ const ContextWindow = () => {
 
   const flow = useReactFlow();
 
+  // Demo - live coding
   const [deleteMode, setDeleteMode] = React.useState(false);
 
   const { topic, setSelectedNodeId, getSelectedNode, removeNodeWithAllEdges } =
     useNodeStore((state) => state);
 
+    // Demo - live coding/explain
   const { mutate, isPending } = useMutation({
     mutationFn: async (query: string) => {
       const currentNode = getSelectedNode();
@@ -124,6 +126,7 @@ const ContextWindow = () => {
     [removeNodeWithAllEdges]
   );
 
+  // Demo - live coding/explain
   React.useEffect(() => {
     setDeleteMode(false);
   }, [selectedNode]);
@@ -178,11 +181,13 @@ const ContextWindow = () => {
                 Explore more on {selectedNode.data.label}
               </Button>
               <div className="flex gap-2 items-center border border-gray-200 rounded-lg px-2">
+                {/** Demo - live coding */}
                 <Switch
                   checked={deleteMode}
                   title="Enable node deletion"
                   onCheckedChange={setDeleteMode}
                 />
+                
                 <Button
                   className={cn({
                     "opacity-20 transition-opacity duration-300": !deleteMode,

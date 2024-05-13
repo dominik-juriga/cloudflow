@@ -7,12 +7,14 @@ import { notFound } from "next/navigation";
 
 type PageProps = { params: { query: string } };
 
+// Demo - live coding
 export const generateMetadata = ({ params }: PageProps) => {
   return {
     title: decodeURIComponent(params.query),
   };
 };
 
+// Demo - live coding
 const Page = async ({ params }: PageProps) => {
   const decoded = decodeURIComponent(params.query);
 

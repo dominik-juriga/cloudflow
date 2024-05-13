@@ -5,6 +5,7 @@ import { type StoreApi, useStore } from "zustand";
 
 import { type NodeStore, createNodeStore } from "@/stores/NodeStore";
 
+// Demo - explain Context
 export const NodeStoreContext = createContext<StoreApi<NodeStore> | null>(null);
 
 export interface NodeStoreProviderProps {
@@ -24,6 +25,8 @@ export const NodeStoreProvider = ({ children }: NodeStoreProviderProps) => {
   );
 };
 
+
+// Demo - explain
 export const useNodeStore = <T,>(selector: (store: NodeStore) => T): T => {
   const nodeStoreContext = useContext(NodeStoreContext);
 

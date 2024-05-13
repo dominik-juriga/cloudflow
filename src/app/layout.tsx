@@ -4,6 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Demo - explain
 export const metadata: Metadata = {
   title: {
     template: "%s | Cloudflow",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   description: "Visualize your mind",
 };
 
+// Demo - explain
 export default function RootLayout({
   children,
 }: Readonly<{

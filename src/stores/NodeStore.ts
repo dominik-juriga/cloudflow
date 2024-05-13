@@ -9,6 +9,8 @@ import {
 } from "reactflow";
 import { createStore } from "zustand/vanilla";
 
+// Demo - explain
+
 export type NodeContentItem = {
   label: string;
   fact: string | null;
@@ -46,6 +48,8 @@ export const defaultInitState: NodeState = {
   nodes: [],
   edges: [],
 };
+
+// Demo - live coding (cca 2 functions)
 export const createNodeStore = (initState: NodeState = defaultInitState) =>
   createStore<NodeStore>()((set, get) => ({
     ...initState,
@@ -105,6 +109,7 @@ const removeEdges = (edgeIds: Array<string>, edges: Array<Edge>) =>
     edges
   );
 
+// Demo - live coding
 export const getAllChildren = (
   node: Node<NodeContent> | undefined,
   nodes: Array<Node<NodeContent>>,
