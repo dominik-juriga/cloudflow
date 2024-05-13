@@ -2,13 +2,6 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export const generateMetadata = () => {
-  return {
-    title: "Cloudflow",
-    description: "Visualize your topics",
-  };
-};
-
 const Page = () => {
   async function createInvoice(formData: FormData) {
     "use server";
